@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import CardList from "./CardList";
 import { cats } from "./cats";
 import SearchBox from "./SearchBox";
-import Button from "./Button";
+import NewCatFriend from "./NewCatFriend";
 
 function App() {
   const [catState, setCatState] = useState({
@@ -15,15 +15,24 @@ function App() {
     setCatState({ ...catState, searchfield: event.target.value });
   };
 
-  const filteredCats = catState.cats.filter((cat) => {
-    return cat.name.toLowerCase().includes(catState.searchfield.toLowerCase());
+  const filteredCats = catState.cats.filter((catsName) => {
+    return catsName.name
+      .toLowerCase()
+      .includes(catState.searchfield.toLowerCase());
   });
+
+  const addCatHandler = (cat) => {
+    setCatState((prevState) => {
+      return { ...prevState, cats: [cat, ...prevState.cats] };
+    });
+  };
 
   return (
     <div className="tc">
-      <h1 className="f1">CatFriends</h1>
+      <h1 className="f1">Cat Friends</h1>
       <SearchBox searchChange={onSearchChange} />
-      <Button />
+      <NewCatFriend onAddCat={addCatHandler} />
+
       <CardList cats={filteredCats} />
     </div>
   );
