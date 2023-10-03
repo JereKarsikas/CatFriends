@@ -21,6 +21,7 @@ function App() {
       .includes(catState.searchfield.toLowerCase());
   });
 
+  // Can add new cat to the list. Bring old cats and add new one.
   const addCatHandler = (cat) => {
     setCatState((prevState) => {
       return { ...prevState, cats: [cat, ...prevState.cats] };
@@ -32,7 +33,6 @@ function App() {
       <h1 className="f1">Cat Friends</h1>
       <SearchBox searchChange={onSearchChange} />
       <NewCatFriend onAddCat={addCatHandler} />
-
       <CardList cats={filteredCats} />
     </div>
   );

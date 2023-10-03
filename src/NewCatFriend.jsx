@@ -6,6 +6,7 @@ import NewCatFriendForm from "./NewCatFriendForm";
 function NewCatFriend({ onAddCat }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
+  // Save added cat and give it some random id number
   const saveCatDataHandler = (enteredCatData) => {
     const catsData = {
       ...enteredCatData,

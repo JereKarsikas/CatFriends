@@ -2,7 +2,7 @@ import { useState } from "react";
 import Icon from "@mdi/react";
 import { mdiCancel } from "@mdi/js";
 
-function NewCatFriendForm({ isOpen, onCancel, onSaveCatData }) {
+function NewCatFriendForm({ onCancel, onSaveCatData }) {
   const [cat, setCat] = useState({
     catName: "",
     city: "",
@@ -35,11 +35,6 @@ function NewCatFriendForm({ isOpen, onCancel, onSaveCatData }) {
     onSaveCatData(catsData);
     setCat("");
   };
-
-  // Open form only when press the button
-  // if (!isOpen) {
-  //   return null;
-  // }
 
   return (
     <>
