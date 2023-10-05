@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import CardList from "./CardList";
 import { cats } from "./cats";
@@ -11,6 +11,14 @@ function App() {
     searchfield: "",
   });
 
+  //This code checks if there is any cat data stored in localStorage under the key 'cats'. If data is found, it parses it from JSON and sets it in the state.
+  useEffect(() => {
+    const storedCats = localStorage.getItem("cats");
+    if (storedCats) {
+      setCatState({ ...catState, cats: JSON.parse(storedCats) });
+    }
+  }, []);
+
   const onSearchChange = (event) => {
     setCatState({ ...catState, searchfield: event.target.value });
   };
@@ -21,10 +29,20 @@ function App() {
       .includes(catState.searchfield.toLowerCase());
   });
 
-  // Can add new cat to the list. Bring old cats and add new one.
+  // first update the state with the new cat data, and then we use localStorage.setItem to store the updated cat list as a JSON string under the key 'cats'.
   const addCatHandler = (cat) => {
     setCatState((prevState) => {
-      return { ...prevState, cats: [cat, ...prevState.cats] };
+      const updatedCats = [cat, ...prevState.cats];
+      localStorage.setItem("cats", JSON.stringify(updatedCats));
+      return { ...prevState, cats: updatedCats };
+    });
+  };
+
+  const removeCatHandler = (id) => {
+    setCatState((prevState) => {
+      const updatedCats = prevState.cats.filter((cat) => cat.id !== id);
+      localStorage.setItem("cats", JSON.stringify(updatedCats));
+      return { ...prevState, cats: updatedCats };
     });
   };
 
@@ -33,7 +51,7 @@ function App() {
       <h1 className="f1">Cat Friends</h1>
       <SearchBox searchChange={onSearchChange} />
       <NewCatFriend onAddCat={addCatHandler} />
-      <CardList cats={filteredCats} />
+      <CardList cats={filteredCats} onRemove={removeCatHandler} />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Modal from "react-modal";
 
 import "./App.css";
 
-function Card({ id, name, city }) {
+function Card({ id, name, city, onRemove }) {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -14,6 +14,10 @@ function Card({ id, name, city }) {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleRemove = () => {
+    onRemove(id);
   };
 
   return (
@@ -44,6 +48,10 @@ function Card({ id, name, city }) {
       </div>
       <h2>{name}</h2>
       <p>{city}</p>
+      <button
+        className="grow bn bg-light-green"
+        onClick={handleRemove}
+      ></button>
     </div>
   );
 }
