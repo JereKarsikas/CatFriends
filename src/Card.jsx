@@ -48,6 +48,7 @@ function Card({ id, name, city, onRemove }) {
       </div>
       <h2>{name}</h2>
       <p>{city}</p>
+      <p>{id}</p>
       <button
         className="grow bn bg-light-green"
         onClick={handleRemove}

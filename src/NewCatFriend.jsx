@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
 import NewCatFriendForm from "./NewCatFriendForm";
 
-function NewCatFriend({ onAddCat }) {
+function NewCatFriend({ onAddCat, catId }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Save added cat and give it some random id number
+  // Using UseMemo because too many useState cause infinity loop
+  const nextCatId = useMemo(() => String(catId + 1), [catId]);
+
+  // Save added cat and give it the next available ID
   const saveCatDataHandler = (enteredCatData) => {
-    const catsData = {
+    const newCat = {
       ...enteredCatData,
-      id: Math.random().toString(),
+      id: nextCatId,
     };
-    onAddCat(catsData);
+    onAddCat(newCat);
     setIsFormOpen(false);
   };
 
